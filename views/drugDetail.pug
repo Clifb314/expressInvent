@@ -1,0 +1,58 @@
+extends layout 
+
+block content 
+    h1= title 
+    - const action = `/catalog/drug/${drug._id}/addproduct`
+    p Class: 
+        if drugClass
+            a(href=drugClass.url) #{drugClass.name}
+        else 
+            | Please add a class!
+    |
+    |
+    div.product
+        ul.product 
+            each product, index in drug.products
+                - let uAction = `/catalog/drug/${drug._id}/${product.ndc}/updateprod`
+                - let dAction = `/catalog/drug/${drug._id}/${product.ndc}/delproduct`
+                li.product
+                    p NDC: #{product.ndc}
+                    p Dosage Form: #{product.form}
+                    p Strength: #{product.strength}
+                    p Manufacurers: 
+                        each val, index in links[0].manus 
+                            a(href=val.url) #{val.name}
+                            if index < links[0].manus.length - 1
+                                |, 
+                    p Lots: 
+                        each val, index in links[0].lots
+                            a(href=val.url) #{val.name}
+                            if index < links[0].lots.length - 1
+                                |, 
+                    form.inline(method='GET', action=uAction, id='update')
+                        input(type='hidden', name='id' value=drug._id)
+                        input(type='hidden', name='prodId' value=product._id)
+                        input(type='hidden', name='index', value=index)
+                        button.update(type='submit') Update 
+                    form.inline(method="GET", action=dAction, id='delete')
+                        input(type='hidden', name='id' value=drug._id)
+                        input(type='hidden', name='prodId' value=product._id)
+                        input(type='hidden', name='index', value=index)
+                        button.delete(type='submit') Delete
+                - links.shift()
+            
+            else
+                li No products have been added yet! 
+            |
+            |
+            form.addProd(method="GET", action=action)
+                input(type='hidden', name='id', value=drug._id)
+                button.addProd(type='submit') Add a new product
+    |
+    |
+    form.inline(method="GET", action=`/catalog/drug/${drug._id}/delete`)
+        input(type='hidden', name='id', value=drug._id)
+        button(type='submit') Delete drug
+    form.inline(method="Get", action=`/catalog/drug/${drug._id}/update`)
+        input(type='hidden', name='id', value=drug._id)
+        button(type='submit') Update drug

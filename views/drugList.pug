@@ -1,0 +1,42 @@
+extends layout 
+
+block content 
+    h1= title 
+    ul 
+        each item in list 
+            li 
+                a.name(href=item.url) #{item.name}
+                if fields
+                    each val, key in fields
+                        p= val + ": " + item[key]
+                if classes
+                    p Classes: 
+                        each val, index in item.class
+                            a(href=`/catalog/class/${val._id}`) #{val.name}
+                            if index < item.class.length - 1
+                                |, 
+                if products
+                    p Products:
+                    ul
+                        each product in item.products
+                            li
+                                p= `NDC: ` + product.ndc
+                                p= `Strength: ` + product.strength
+                                p= 'Form: ' + product.form
+                                p= 'Manufacturers: '
+                                    each manu, index in product.manufact 
+                                        a(href=`/catalog/manu/${manu._id}`) #{manu.name}
+                                        if index < product.manufact.length - 1
+                                            |, 
+                                p= 'Lots: '
+                                    each lot, index in product.lots 
+                                        a(href=`/catalog/lot/${lot._id}`) #{lot.lot}
+                                        if index < product.lots.length - 1
+                                            |, 
+
+                    |
+        else
+            li There are no items in the database.
+
+    form(method="GET", action=action)
+        button.add(type='submit') Add

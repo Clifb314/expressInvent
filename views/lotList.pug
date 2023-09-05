@@ -1,0 +1,19 @@
+extends layout 
+
+block content 
+    h1= title 
+    ul 
+        each drug in list 
+            li 
+                p
+                    a.name(href=drug.url) #{drug.name}
+                    ul 
+                        each product in drug.products
+                            each lot in product.lots
+                                li
+                                    a(href=`/catalog/lot/${lot._id}`) #{lot.lot}
+
+
+
+    form(method="GET", action=action)
+        button.add(type='submit') Add

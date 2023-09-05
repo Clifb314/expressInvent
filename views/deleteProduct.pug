@@ -1,0 +1,26 @@
+extends layout 
+
+
+block content
+
+    h1= title 
+
+    if product
+        ul 
+            li= 'NDC: ' + product.ndc
+            li= 'Strength: ' +  product.strength
+            li= 'Form: ' +  product.form
+            p Will also delete these lots from the database:
+            if product.lots
+                each lot in product.lots
+                    li
+                        a(href=`/catalog/lots/${lot._id}`) #{lot.lot}
+            else 
+                p There are none!
+
+
+    form(method="POST" action=action)
+        input(type='hidden', value=drugId, name='drugId')
+        input(type='hidden', value=ndc, name='ndc')
+        input(type='hidden', value=product._id, name='prodId')
+        button(type='submit') Delete

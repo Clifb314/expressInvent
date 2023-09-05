@@ -1,0 +1,29 @@
+extends layout 
+
+block content 
+    h1= title
+    |
+    |
+    h1
+        a(href='/catalog/drugs') Drugs 
+    ul
+        each drug in drugs
+            li 
+                a(href=drug.url) #{drug.name}
+    |
+    h1
+        a(href='/catalog/classes') Drug Classes
+    ul 
+        each item in classes 
+            li 
+                a(href=item.url) #{item.name}
+    |
+    h1
+        a(href='/catalog/manus') Manufacturers
+    ul 
+        each manu in manus 
+            li 
+                a(href=manu.url) #{manu.name}
+    |
+    h1
+        a(href='/catalog/lots') Available Lots

@@ -1,0 +1,22 @@
+extends layout 
+
+block content 
+    h1= title 
+    ul 
+        if fields
+            each pair in fields
+                each val, key in pair 
+                    li= key + ": " + item[val]
+    |
+    |
+    p Drugs associated with this #{type} :
+    ul 
+        each drug in drugs
+            li 
+                a(href=drug.url) #{drug.name}
+    form.inline(action=`/catalog/${btnType}/${item._id}/delete`, method='GET')
+        input(type='hidden', name='id', value=item._id)
+        button(type='submit') Delete
+    form.inline(action=`/catalog/${btnType}/${item._id}/update`, method='GET')
+        input(type='hidden', name='id', value=item._id)
+        button(type='submit') Update

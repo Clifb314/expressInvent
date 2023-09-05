@@ -1,0 +1,52 @@
+extends layout 
+
+block content
+
+    h1= title
+    - const btn = update ? `Update` : 'Add to database'
+
+    if errors 
+        each val in errors 
+            p= val
+
+    form(method="POST" action=action)
+        div.form
+                input(type='hidden', value=drugId, name='drugId')
+                input(type="hidden", value=(update ? item._id : ''), name='prodId')
+                label(for='ndc') NDC:  
+                input(type='text', name='ndc', required='true', value=(update ? item.ndc : '') )
+                label(for='strength') Strength:  
+                input(type='text', name='strength', required='true', value=(update ? item.strength : ''), placeholder='eg 25mg or 50mg / 250mL' )
+                label(for='form') Form:  
+                input(type='text', name='form', required='true', value=(update ? item.form : '') )
+
+                if update
+                    div#lots
+                        label(for='lots') Lot Numbers:                      
+                        each lot in item.lots
+                            input(type='text', name='lots', required='true', value=lot.lot )
+                        button#lotAdd(type='button') Add another
+                        button#lotRemove(type='button') Remove
+                    div#manufact
+                        label(for='manufact') Manufacturers:  
+                        each manu in item.manufact
+                            input(type='text', name='manufact', required='true', value=manu.name )
+                        button#manuAdd(type='button') Add another
+                        button#manuRemove(type='button') Remove
+
+                else
+                    div#lots
+                        label(for='lots') Lot Numbers:  
+                        input(type='text', name='lots', required='true' )
+                    button#lotAdd(type='button') Add Another
+                    button#lotRemove(type='button') Remove
+                    div#manufact
+                        label(for='manufact') Manufacturers:  
+                        input(type='text', name='manufact', required='true' )
+                    button#manuAdd(type='button') Add another
+                    button#manuRemove(type='button') Remove
+        button(type='submit') #{btn}
+
+block scripts 
+
+    script(src="/javascripts/addbtn.js")

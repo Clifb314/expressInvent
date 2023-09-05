@@ -1,0 +1,22 @@
+extends layout 
+
+block content 
+    h1= title
+    - const btn = update ? `Update ${item.name}` : 'Add to database'
+
+    if errors 
+        p Please review the following errors:
+        p= errors
+        each val in errors 
+            p= val
+
+    form(method="POST" action=action)
+        div.form
+            each val, key in fields
+                label(for=val) #{key}: 
+                input(type='text', name=val, required='true', value=(update ? item[val] : '') )
+            if drugId 
+                input(type='hidden', name='drugId', require='true', value=drugId)
+            if products 
+                input(type='hidden', name='products', require='true', value=item.products)
+        button(type='submit') #{btn}

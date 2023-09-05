@@ -1,0 +1,10 @@
+extends layout 
+
+block content 
+    h1= title 
+    form(method="POST" action=action)
+        div.form
+            input(type='hidden', name='id', required="true", value=id)
+            if drugId
+                input(type='hidden', name='drugId', required="true", value=drugId)
+        button.form(type='submit') Delete

@@ -1,0 +1,20 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+
+    div.header
+      div#home
+        a(href='/') Home
+      div#catCont
+        div#cat Catalogs
+        div#list
+          a(href='/catalog/drugs') Drugs 
+          a(href='/catalog/classes') Classes 
+          a(href='/catalog/manus') Manufacturers 
+          a(href='/catalog/lots') Available Lots
+    block content
+
+    block scripts
